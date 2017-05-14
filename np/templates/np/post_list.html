@@ -1,0 +1,15 @@
+{% extends 'np/base.html' %}
+
+{% block content %}
+    {% for article in articles %}
+        <div class="post">
+            <div class="date">
+                {{ article.created_date }}
+            </div>
+            <h1><a href="{% url 'article_detail' pk=article.pk %}">{{ article.title }}</a></h1><br><br>
+            <img src="{{article.image_url}}" width="200" height="200">
+            <p>{{ article.intro_text|linebreaksbr }}</p>
+            <p class="filedUnder">Filed under: <a href="{% url 'section_filtered' section=article.section %}">{{ article.section|capfirst}}</a></p>
+        </div>
+    {% endfor %}
+{% endblock %}

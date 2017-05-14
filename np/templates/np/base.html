@@ -1,0 +1,51 @@
+{% load staticfiles %}
+<html>
+    <head>
+        <title>Amazing News</title>
+
+        <link rel="stylesheet" href="{% static 'css/newspaper.css' %}">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+        <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+
+    </head>
+    <body>
+
+    <div class="page-header">
+        {% if user.is_authenticated %}
+        <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
+
+        <p class="top-menu">Hello {{ user.username }} <small>(<a href="{% url 'logout' %}">Log out</a>)</small></p>
+    {% else %}
+        <a href="{% url 'login' %}" class="top-menu"><span class="glyphicon glyphicon-lock"></span></a>
+    {% endif %}
+    <h1><a href="/">Amazing News</a></h1>
+
+    </div>
+
+    <div class="content container">
+        <nav>
+        <ul class="nav nav-tabs nav-justified">
+      {% for sects in sections %}
+	<li>
+	        <a href="{% url 'section_filtered' section=sects %}">{{ sects|capfirst}}</a>
+	</li>
+      {%endfor%}
+</ul>
+            </nav>
+
+        <div class="row">
+
+            <div class="col-md-12">
+            {% block content %}
+            {% endblock %}
+            </div>
+
+        </div>
+
+    </div>
+    <footer>&copy; Jordan Aberhart 2017</footer>
+</body>
+
+</html>
